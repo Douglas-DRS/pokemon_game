@@ -1,5 +1,21 @@
+import random
+
 from pokemon import *
 
+NOMES = [
+	'Claudeo', 'Cleiton', 'Juca', 'Mauricio', 'Vinicius', 
+	'Lucas', 'Douglas', 'Pope', 'Wallauer', 'Cabelo'
+	]
+
+POKEMONS = [
+	PokemonFogo('Charmander'),
+	PokemonFogo('Flarion'),
+	PokemonFogo('Charmilion'),
+	PokemonEletrico('Pikachu'),
+	PokemonEletrico('Raichu'),
+	PokemonAgua('Squirtle'),
+	PokemonAgua('Magicarp'),
+]
 
 class Pessoa:
 
@@ -7,7 +23,7 @@ class Pessoa:
 		if nome:
 			self.nome = nome
 		else:
-			self.nome = 'Anônimo'
+			self.nome = random.choice(NOMES)
 
 		self.pokemons = pokemons
 
@@ -15,23 +31,33 @@ class Pessoa:
 		return self.nome
 	
 	def mostrar_pokemons(self):
-		for pokemon in self.pokemons:
-			print(pokemon)
-
+		if self.pokemons:
+			print(f'Pokemons de {self}:')
+			for pokemon in self.pokemons:
+				print(pokemon)
+		else:
+			print(f'{self} não tem nenhum pokemon')
 
 
 class Player(Pessoa):
 	tipo = 'player'
 
+	def capturar(self, pokemon):
+		self.pokemons.append(pokemon)
+		print(f'{self} capturou {pokemon}')
+
 
 class Inimigo(Pessoa):
 	tipo = 'inimigo'
 
+	def __init__(self, nome=None, pokemons=[]):
+		if not pokemons:
+			for i in range(random.randint(1, 6)):
+				pokemons.append(random.choice(POKEMONS))
 
-meu_pokemon = PokemonEletrico('pikachu')
-meu_pokemon2 = PokemonFogo('charmander')
+		super().__init__(nome=nome, pokemons=pokemons)
 
-eu = Player(nome='Douglas', pokemons=[meu_pokemon, meu_pokemon2])
 
-print(eu)
-eu.mostrar_pokemons()
+meu_inimigo = Inimigo()
+print(meu_inimigo)
+meu_inimigo.mostrar_pokemons()
