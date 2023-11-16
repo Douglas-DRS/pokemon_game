@@ -58,6 +58,7 @@ class Inimigo(Pessoa):
 		super().__init__(nome=nome, pokemons=pokemons)
 
 
-meu_inimigo = Inimigo()
+meu_inimigo = Inimigo(nome='Valter')
+
 print(meu_inimigo)
 meu_inimigo.mostrar_pokemons()
